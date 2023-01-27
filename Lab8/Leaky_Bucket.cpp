@@ -1,36 +1,49 @@
-#include<bits/stdc++.h>
-#include<unistd.h>
-using namespace std;
-#define bucketSize 500
+#include <iostream>
 
-void bucketInput(int a,int b)
-{
-if(a > bucketSize)
-cout<<"\n\t\tBucket overflow";
-else{
-sleep(5);
-while(a > b){
-cout<<"\n\t\t"<<b<<" bytes outputted.";
-a-=b;
-sleep(5);
-}
-if(a > 0)
-cout<<"\n\t\tLast "<<a<<" bytes sent\t";
-cout<<"\n\t\tBucket output successful";
-}
-}
+using namespace std;
+
 int main()
 {
-int op,pktSize;
-cout<<"Enter output rate : ";
-cin>>op;
-for(int i=1;i<=5;i++)
-{
-sleep(rand()%10);
-pktSize=rand()%700;
-cout<<"\nPacket no "<<i<<"\tPacket size = "<<pktSize;
-bucketInput(pktSize,op);
-}
-cout<<endl;
-return 0;
+    cout << "Enter bucket size " << endl;
+    int bucketsize;
+    int filled=0;
+    int outputrate;
+    int inputpacket;
+    int choice;
+    cin >> bucketsize;
+    cout << "Enter  output rate" << endl;
+    cin >> outputrate;
+    do
+    {
+        cout << "Enter packet size" << endl;
+        cin >> inputpacket;
+         
+        if (inputpacket<=bucketsize)
+        {
+           
+            if(filled+inputpacket>bucketsize)
+            {
+                cout<<"Packets too big for bucket"<<endl;
+            }
+            else{
+                filled = filled+inputpacket;
+            }
+        }
+        else
+        {
+            cout << "Packets too big for bucket" <<endl;
+        }
+        if (filled<=outputrate)
+        {
+            filled=0;
+        }
+        else
+        {
+            filled = filled - outputrate;
+        }
+        cout << "Amount of bucket filled " << filled << endl;
+        cout << "Do you want to enter another packet(1 for yes, 2 for no)" << endl;
+        cin >> choice;
+    }while (choice==1);
+   
 }
